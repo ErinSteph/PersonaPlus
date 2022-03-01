@@ -4,7 +4,7 @@
 // @description More persona options for NameSync
 // @include     *4chan.org/b/*
 // @include     *4chan.org/soc/*
-// @version     1.7
+// @version     1.8
 // @updateURL     https://github.com/ErinSteph/PersonaPlus/raw/master/personaplus.user.js
 // @downloadURL     https://github.com/ErinSteph/PersonaPlus/raw/master/personaplus.user.js
 // @author      team !kittensORw (Erin!)
@@ -14,6 +14,7 @@
 
 /*
 <CHANGELOG>
+1.8 - github updates
 1.7 - compatibility with multiple instances
 1.6 - tripcode preparsing
 1.5 - fixed settings window overflow, removed unused updater
