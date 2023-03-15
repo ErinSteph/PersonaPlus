@@ -4,7 +4,7 @@
 // @description More persona options for NameSync
 // @include     *4chan.org/b/*
 // @include     *4chan.org/soc/*
-// @version     1.8.1
+// @version     1.9
 // @updateURL     https://github.com/ErinSteph/PersonaPlus/raw/main/personaplus.user.js
 // @downloadURL     https://github.com/ErinSteph/PersonaPlus/raw/main/personaplus.user.js
 // @author      team !kittensORw (Erin!)
@@ -14,6 +14,7 @@
 
 /*
 <CHANGELOG>
+1.9 - some functions for advanced colors
 1.8.1 - i made a typo or something
 1.8 - github updates
 1.7 - compatibility with multiple instances
@@ -29,7 +30,7 @@
 
 function personaPlus(){
 
-    var $version = 1.7;
+    var $version = 1.9;
 
     var d, db, h, $, $$;
 
@@ -173,40 +174,6 @@ function personaPlus(){
 			x.send(p);
 		}
 	}
-
-    $.updateScript = function(v, n, t){
-        var $upd;
-        $upd = {};
-        $upd['id'] = 'update-'+n;
-        $upd['style'] = 'position:fixed;width:300px;height:150px;background:#FFFFEE;border:1px solid;right:50%;margin-right:-150px;top:50%;margin-top:-75px;text-align:center;';
-        $upd = $.elm('div', $upd, db);
-        $.htm($upd, '\
-          <h2>Update ' + t + '</h2>\
-          <p>new version: ' + v + '<br>your version: ' + $version + '</p>\
-          <p><button type="button" id="install-' + n + '">Install</button><button type="button" id="cancel-' + n + '">Cancel</button></p>\
-        ');
-        $('#install-' + n).addEventListener('click', function(){ $upd.style.display = 'none'; window.open("http://i.xn--7r8h.tk/personaplus/"+v+"/personaplus.user.js"); }, false);
-        $('#clear-' + n).addEventListener('click', function(){ $upd.style.display = 'none'; $.setVal(v+'upd'+n, 'pass'); }, false);
-    }
-
-    $.checkVersion = function(n, t){
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://imagesync.org/kver.php");
-          xhr.onreadystatechange = function () {
-			if (xhr.readyState == 4) {
-               var $newVer = xhr.responseText.split(n + ':')[1].split(';')[0];
-               if(parseFloat($newVer) > $version && $.getVal(parseFloat($newVer)+'upd'+n, 'false') != 'pass'){
-                   return $.updateScript(parseFloat($newVer), n, t);
-               }else{
-                   return false;
-               }
-
-           }
-        }
-        xhr.send();
-    }
-
-    $.checkVersion('personaplus', 'PersonaPlus');
 
 
     var $icons = {};
@@ -686,6 +653,36 @@ function personaPlus(){
 
             ppCntr();
 
+            if(($('#fsdmi') || null) != null){
+              function specialColor(){
+                var $fPar = $$('fieldset', $('.section-name-sync'))[1];
+                var $NSname = $$('input', $fPar)[1];
+                var $NSmail = $$('input', $fPar)[2];
+                var $NSsub = $$('input', $fPar)[3];
+                var $NStrip = (validateTrip('#' + $NSname.value.replace("##", "#").split("#")[1]) ||  '');
+                var $NSna = ($NSname.value.replace("##", "#").split("#")[0] ||  '');
+
+                $('#fsdms').innerHTML = $NSsub.value;
+                $('#fslms').innerHTML = $NSsub.value;
+
+                $('#fsdmt').innerHTML = $NStrip;
+                $('#fslmt').innerHTML = $NStrip;
+
+                $('#fsdmn').innerHTML = $NSna;
+                $('#fslmn').innerHTML = $NSna;
+
+               // $NSname.addEventListener('input', init, false);
+
+               // $NSmail.addEventListener('input', init, false);
+
+                //$NSsub.addEventListener('input', init, false);
+
+                ///$('input', $('#FSmorecolorsnode')).addEventListener('input', init, false);
+
+              }
+              specialColor();
+            }
+
             $('#PPaddonemoar').addEventListener('click', function(){
                var n = (parseFloat($.getVal("PPextra", "0")) + 1);
                $.setVal("PPextra", n);
@@ -813,7 +810,7 @@ function personaPlus(){
         if(e.detail === 'Name Sync'){
             init();
         }
-        $('.tab-name-sync').addEventListener('click', init, false);
+       // $('.tab-name-sync').addEventListener('click', init, false);
     }, false);
 
     function newSafeX(){
